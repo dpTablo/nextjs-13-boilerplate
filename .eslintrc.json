@@ -1,9 +1,12 @@
 {
-  "extends": "next/core-web-vitals",
+  "root": true,
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json",
-    "ecmaVersion": 2015,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "plugins": [
@@ -22,10 +25,11 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
-    "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/indent": ["error", 4],
-    "prettier/prettier": ["error", {
-      "endOfLine": "auto"
-    }]
+    "@typescript-eslint/no-use-before-define": "off"
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
   }
 }
