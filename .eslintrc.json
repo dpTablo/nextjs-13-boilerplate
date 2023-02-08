@@ -1,35 +1,37 @@
 {
-  "root": true,
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json",
-    "ecmaFeatures": {
-      "jsx": true
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json",
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
     },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "@typescript-eslint",
-    "prettier",
-    "import"
-  ],
-  "extends": [
-    "next/core-web-vitals",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "airbnb-typescript",
-    "plugin:prettier/recommended"
-  ],
-  "rules": {
-    "@typescript-eslint/no-use-before-define": "off"
-  },
-  "env": {
-    "browser": true,
-    "es6": true,
-    "jest": true
-  }
+    "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier", "import"],
+    "extends": [
+        "next/core-web-vitals",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "airbnb-typescript",
+        "plugin:prettier/recommended"
+    ],
+    "rules": {
+        "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/indent": ["error", 4],
+        "indent": ["error", 4],
+        "prettier/prettier": [
+            "error",
+            {
+                "useTabs": false
+            }
+        ]
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jest": true
+    }
 }
