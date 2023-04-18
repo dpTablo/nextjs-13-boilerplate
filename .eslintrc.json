@@ -6,7 +6,7 @@
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": "latest",
+        "ecmaVersion": 12,
         "sourceType": "module"
     },
     "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier", "import"],
@@ -21,13 +21,14 @@
     "rules": {
         "@typescript-eslint/no-use-before-define": "off",
         "@typescript-eslint/indent": ["error", 4],
-        "indent": ["error", 4],
+        "@typescript-eslint/no-namespace": "off",
         "prettier/prettier": [
             "error",
             {
-                "useTabs": false
+                "endOfLine": "auto"
             }
-        ]
+        ],
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
     },
     "env": {
         "browser": true,
