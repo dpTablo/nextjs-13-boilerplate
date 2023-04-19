@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <main className={styles.main}>
             <div className={styles.description}>
-                <h1>app/page.tsx</h1>
+                <h1>src/app/page.tsx</h1>
                 <p>
                     Get started by editing&nbsp;
                     <code className={styles.code}>app/page.tsx</code>
