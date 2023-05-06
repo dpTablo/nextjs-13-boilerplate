@@ -20,12 +20,15 @@
         "next": "^13.3.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "styled-components": "^5.3.9",
+        "react-icons": "^4.8.0",
+        "styled-components": "^5.3.10",
+        "tailwindcss": "^3.3.2",
         "typescript": "^5.0.4"
     },
     "devDependencies": {
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^14.0.0",
+        "@types/styled-components": "^5.1.26",
         "@typescript-eslint/eslint-plugin": "^5.59.0",
         "@typescript-eslint/parser": "^5.59.0",
         "autoprefixer": "^10.4.14",
@@ -43,6 +46,6 @@
         "postcss": "^8.4.23",
         "prettier": "^2.8.7",
         "sass": "^1.62.1",
-        "tailwindcss": "^3.3.2"
+        "tailwind-styled-components": "^2.2.0"
     }
 }
