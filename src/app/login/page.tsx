@@ -1,9 +1,12 @@
 import LoginForm from '@components/auth/LoginForm';
+import ClientComponent from '@components/ClientComponent';
 
 export default function TestPage() {
     return (
         <div>
-            <LoginForm />
+            <ClientComponent>
+                <LoginForm />
+            </ClientComponent>
         </div>
     );
 }

@@ -2,3 +2,4 @@
 tsconfig.json
 jest.setup.js
 *.config.js
+public/**

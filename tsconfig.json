@@ -22,7 +22,9 @@
         ],
         "baseUrl": ".",
         "paths": {
-            "@components/*": ["src/components/*"]
+            "@components/*": ["src/components/*"],
+            "@msw/*": ["src/msw/*"],
+            "@service/*": ["src/service/*"],
         }
     },
     "include": [
@@ -31,5 +33,5 @@
         ".next/types/**/*.ts",
         "tailwind.config.js"
     ],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules", "public"]
 }

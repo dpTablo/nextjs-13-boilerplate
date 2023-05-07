@@ -1,6 +1,21 @@
-// import styled from 'styled-components';
+'use client';
+
 import tw from 'tailwind-styled-components';
 import { AiOutlineUser as UserIcon } from 'react-icons/ai';
+import { DefaultAuthService } from '@service/auth/DefaultAuthService';
+import { AuthService } from '@service/auth/AuthService';
+
+// if (process.env.NEXT_PUBLIC_API_MOCKING === 'enable' && process.env.NODE_ENV === 'development') {
+//     console.log('=============================================');
+//     console.log('========== MSW API MOCKING RUNNING ==========');
+//     console.log('=============================================');
+//
+//     /** MSW */
+//     (async () => {
+//         const { initMsw } = await import('@msw/index');
+//         initMsw();
+//     })();
+// }
 
 const Label = tw.label`
     block 
@@ -70,6 +85,17 @@ const LoginFormTitle = tw.h1`
 `;
 
 export default function LoginForm() {
+    const authService: AuthService = new DefaultAuthService();
+
+    const login = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const email = event.currentTarget.email.value;
+        const password = event.currentTarget.password.value;
+        const userAuthentication = await authService.login(email, password);
+        console.log(userAuthentication);
+        console.log('onSubmit');
+    };
+
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -80,7 +106,7 @@ export default function LoginForm() {
                 <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <LoginFormTitle>로그인</LoginFormTitle>
-                        <form className="space-y-4 md:space-y-6" action="#">
+                        <form className="space-y-4 md:space-y-6" action="#" onSubmit={login}>
                             <div>
                                 <Label htmlFor="email">이메일</Label>
                                 <Input type="email" name="email" id="email" placeholder="name@company.com" />
