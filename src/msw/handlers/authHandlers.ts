@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-export const loginHandlers = [
+export const authHandlers = [
     rest.post('https://api.dptablo.com/v3/auth/login', async (request, response, context) => {
         const arrayBuffer = await request.arrayBuffer();
 
