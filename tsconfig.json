@@ -25,7 +25,10 @@
             "@components/*": ["src/components/*"],
             "@msw/*": ["src/msw/*"],
             "@service/*": ["src/service/*"],
-        }
+            "@model/*": ["src/model/*"],
+            "@error/*": ["src/error/*"]
+        },
+        "types": ["node", "jset"]
     },
     "include": [
         "next-env.d.ts",

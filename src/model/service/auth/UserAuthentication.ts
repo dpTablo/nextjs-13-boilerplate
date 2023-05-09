@@ -1,5 +1,6 @@
-import Avj from 'ajv';
-import { ServiceResponseInvalidJsonError } from '../../../error/ServiceResponseInvalidJsonError';
+import Ajv from 'ajv';
+import { ServiceResponseInvalidJsonError } from '@error/ServiceResponseInvalidJsonError';
+import { JsonDeserializable } from '@model/service/JsonDeserializable';
 
 const schema = {
     type: 'object',
@@ -7,38 +8,40 @@ const schema = {
         userId: { type: 'string' },
         accessToken: { type: 'string' },
         refreshToken: { type: 'string' },
+        expires: { type: 'number' },
     },
-    required: ['userId', 'accessToken', 'refreshToken'],
+    required: ['userId', 'accessToken', 'refreshToken', 'expires'],
     additionalProperties: false,
 };
 
-export class UserAuthentication {
-    private _userId = '';
+export class UserAuthentication implements JsonDeserializable {
+    private _userEmail = '';
 
     private _accessToken = '';
 
     private _refreshToken = '';
 
-    static fromJson(json: object): UserAuthentication {
-        const avj = new Avj();
+    private _expires = 0;
+
+    deserialize(json: object) {
+        const avj = new Ajv();
         const validate = avj.compile(schema);
         if (!validate(json)) {
             throw new ServiceResponseInvalidJsonError(validate.errors);
         }
 
-        const instance = new UserAuthentication();
-        instance.userId = json.userId as string;
-        instance.accessToken = json.accessToken as string;
-        instance.refreshToken = json.refreshToken as string;
-        return instance;
+        this.userEmail = json.userId as string;
+        this.accessToken = json.accessToken as string;
+        this.refreshToken = json.refreshToken as string;
+        this.expires = json.expires as number;
     }
 
-    get userId(): string {
-        return this._userId;
+    get userEmail(): string {
+        return this._userEmail;
     }
 
-    set userId(value: string) {
-        this._userId = value;
+    set userEmail(value: string) {
+        this._userEmail = value;
     }
 
     get accessToken(): string {
@@ -55,5 +58,13 @@ export class UserAuthentication {
 
     set refreshToken(value: string) {
         this._refreshToken = value;
+    }
+
+    get expires(): number {
+        return this._expires;
+    }
+
+    set expires(value: number) {
+        this._expires = value;
     }
 }
