@@ -1,0 +1,20 @@
+version: "2.1"
+services:
+    nginx:
+        image: dptablo/nextjs-13-boilerplate-nginx-dev
+        build:
+            context: ./
+            dockerfile: ./Dockerfile-nginx-dev
+        container_name: nextjs-13-boilerplate-nginx-dev
+        ports:
+            - "8888:8080"
+        depends_on:
+            - pm2
+    pm2:
+        image: dptablo/nextjs-13-boilerplate-pm2-dev
+        build:
+            context: ../..
+            dockerfile: ./docker/dev/Dockerfile-pm2-dev
+        container_name: nextjs-13-boilerplate-pm2-dev
+        expose:
+            - "13333"

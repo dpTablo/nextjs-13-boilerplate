@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+	environment {
+	    GIT_CREDENTIALS = 'jenkins git credentials 을 입력하세요'
+
+	    JENKINS_SSH_PK = '배포대상 서버 ssh 접속을 위한 key 파일 위치. 예) /var/jenkins_home/.ssh/jenkins_rsa'
+		TARGET_HOST = "배포대상서버 접속 정보 예) foo@192.168.1.100"
+
+		PM2_DOCKER_IMAGE_NAME = 'dptablo/nextjs-13-boilerplate-pm2-dev
+        PM2_DOCKER_IMAGE_FILE_NAME = 'nextjs-13-boilerplate-pm2-dev-latest.tar'
+		PM2_DOCKER_CONTAINER_NAME = 'nextjs-13-boilerplate-pm2-dev'
+
+        NGINX_DOCKER_IMAGE_NAME = 'dptablo/nextjs-13-boilerplate-nginx-dev'
+        NGINX_DOCKER_IMAGE_FILE_NAME = 'nextjs-13-boilerplate-nginx-dev-latest.tar'
+		NGINX_DOCKER_CONTAINER_NAME = 'nextjs-13-boilerplate-nginx-dev'
+
+		DEV_SERVER_SSH_CREDENTIALS = '배포대상 서버의 ssh 인증정보 credentials 을 입력하세요.'
+		UPLOAD_PATH = '배포대상서버의 docker 이미지 업로드 path. 예) /home/dptablo'
+        DOCKER_COMPOSE_FILE_PATH = 'docker/dev/docker-compose-dev.yml'
+        DOCKER_COMPOSE_FILE_NAME = 'docker-compose-dev.yml'
+	}
+	stages {
+	    stage('git clone') {
+			steps {
+				git branch: '배포 대상 브랜치명을 입력하세요', credentialsId: GIT_CREDENTIALS, url: '저장소 HTTPS URL 을 입력하세요'
+			}
+		}
+        stage('jenkins - remove docker images') {
+            steps {
+                sh "docker rmi -f ${PM2_DOCKER_IMAGE_NAME}:latest"
+                sh "docker rmi -f ${NGINX_DOCKER_IMAGE_NAME}:latest"
+            }
+        }
+        stage('jenkins - docker build & save') {
+            steps {
+                sh "rm -rf build"
+                sh "mkdir build"
+                sh "docker buildx build --platform linux/amd64 -t ${PM2_DOCKER_IMAGE_NAME}:latest -f docker/dev/Dockerfile-pm2-dev ."
+                sh "docker save -o build/${PM2_DOCKER_IMAGE_FILE_NAME} ${PM2_DOCKER_IMAGE_NAME}"
+                sh "docker buildx build --no-cache --platform linux/amd64 -t ${NGINX_DOCKER_IMAGE_NAME}:latest -f docker/dev/Dockerfile-nginx-dev ./docker/dev"
+                sh "docker save -o build/${NGINX_DOCKER_IMAGE_FILE_NAME} ${NGINX_DOCKER_IMAGE_NAME}"
+            }
+        }
+		stage('upload docker image file') {
+            steps {
+                sshagent (credentials: [DEV_SERVER_SSH_CREDENTIALS]) {
+                    sh "ssh -o StrictHostKeyChecking=no ${TARGET_HOST} 'rm -rf ${UPLOAD_PATH}'"
+                    sh "ssh -o StrictHostKeyChecking=no ${TARGET_HOST} 'mkdir ${UPLOAD_PATH}'"
+                    sh "scp -i ${JENKINS_SSH_PK} build/${PM2_DOCKER_IMAGE_FILE_NAME} ${TARGET_HOST}:${UPLOAD_PATH}"
+                    sh "scp -i ${JENKINS_SSH_PK} build/${NGINX_DOCKER_IMAGE_FILE_NAME} ${TARGET_HOST}:${UPLOAD_PATH}"
+                    sh "scp -i ${JENKINS_SSH_PK} ${DOCKER_COMPOSE_FILE_PATH} ${TARGET_HOST}:${UPLOAD_PATH}"
+                }
+            }
+        }
+        stage('target server - remove docker container & image, run docker-compose') {
+            steps {
+                sshagent (credentials: [DEV_SERVER_SSH_CREDENTIALS]) {
+                    sh "ssh -o StrictHostKeyChecking=no ${TARGET_HOST} 'docker rm -f ${PM2_DOCKER_CONTAINER_NAME}'"
+                    sh "ssh -o StrictHostKeyChecking=no ${TARGET_HOST} 'docker rmi -f ${PM2_DOCKER_IMAGE_NAME}'"
+                    sh "ssh -o StrictHostKeyChecking=no ${TARGET_HOST} 'docker load < ${UPLOAD_PATH}/${PM2_DOCKER_IMAGE_FILE_NAME}'"
+
+                    sh "ssh -o StrictHostKeyChecking=no ${TARGET_HOST} 'docker rm -f ${NGINX_DOCKER_CONTAINER_NAME}'"
+                    sh "ssh -o StrictHostKeyChecking=no ${TARGET_HOST} 'docker rmi -f ${NGINX_DOCKER_IMAGE_NAME}'"
+                    sh "ssh -o StrictHostKeyChecking=no ${TARGET_HOST} 'docker load < ${UPLOAD_PATH}/${NGINX_DOCKER_IMAGE_FILE_NAME}'"
+
+                    sh "ssh -o StrictHostKeyChecking=no ${TARGET_HOST} 'docker-compose -f ${UPLOAD_PATH}/${DOCKER_COMPOSE_FILE_NAME} up -d'"
+                }
+            }
+        }
+	}
+}
