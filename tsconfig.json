@@ -26,6 +26,7 @@
             "@msw/*": ["src/msw/*"],
             "@service/*": ["src/service/*"],
             "@model/*": ["src/model/*"],
+            "@redux/*": ["src/redux/*"],
             "@error/*": ["src/error/*"]
         },
         "types": ["node", "jset"]

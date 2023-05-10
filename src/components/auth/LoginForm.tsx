@@ -1,21 +1,14 @@
 'use client';
 
+import { useEffect } from 'react';
 import tw from 'tailwind-styled-components';
 import { AiOutlineUser as UserIcon } from 'react-icons/ai';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import { useRouter } from 'next/navigation';
+
+import { login } from '@redux/auth/userAuthenticationSlice';
 import { DefaultAuthService } from '@service/auth/DefaultAuthService';
 import { AuthService } from '@service/auth/AuthService';
-
-// if (process.env.NEXT_PUBLIC_API_MOCKING === 'enable' && process.env.NODE_ENV === 'development') {
-//     console.log('=============================================');
-//     console.log('========== MSW API MOCKING RUNNING ==========');
-//     console.log('=============================================');
-//
-//     /** MSW */
-//     (async () => {
-//         const { initMsw } = await import('@msw/index');
-//         initMsw();
-//     })();
-// }
 
 const Label = tw.label`
     block 
@@ -85,15 +78,32 @@ const LoginFormTitle = tw.h1`
 `;
 
 export default function LoginForm() {
+    const router = useRouter();
     const authService: AuthService = new DefaultAuthService();
 
-    const login = async (event: React.FormEvent<HTMLFormElement>) => {
+    const userAuthentication = useAppSelector((state) => state.userAuthenticationReducer.value);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (userAuthentication) {
+            console.log('인증정보 있음');
+        } else {
+            console.log('인증정보 없음!');
+        }
+    });
+
+    const onSubmitLoginForm = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
         const email = event.currentTarget.email.value;
         const password = event.currentTarget.password.value;
-        const userAuthentication = await authService.login(email, password);
-        console.log(userAuthentication);
-        console.log('onSubmit');
+        const newUserAuthentication = await authService.login(email, password);
+
+        dispatch(login(newUserAuthentication));
+        router.push('/dashboard');
+
+        // console.log(newUserAuthentication);
+        // console.log('onSubmit');
     };
 
     return (
@@ -106,7 +116,7 @@ export default function LoginForm() {
                 <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <LoginFormTitle>로그인</LoginFormTitle>
-                        <form className="space-y-4 md:space-y-6" action="#" onSubmit={login}>
+                        <form className="space-y-4 md:space-y-6" action="#" onSubmit={onSubmitLoginForm}>
                             <div>
                                 <Label htmlFor="email">이메일</Label>
                                 <Input type="email" name="email" id="email" placeholder="name@company.com" />

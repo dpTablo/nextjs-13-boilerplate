@@ -10,15 +10,15 @@
 // ***********************************************
 //
 //
-// -- This is a parent command --
+// -- This is auth parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
 //
 //
-// -- This is a child command --
+// -- This is auth child command --
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
 //
 //
-// -- This is a dual command --
+// -- This is auth dual command --
 // Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
 //
 //
