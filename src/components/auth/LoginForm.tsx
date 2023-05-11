@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import tw from 'tailwind-styled-components';
 import { AiOutlineUser as UserIcon } from 'react-icons/ai';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
@@ -84,14 +83,6 @@ export default function LoginForm() {
     const userAuthentication = useAppSelector((state) => state.userAuthenticationReducer.value);
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        if (userAuthentication) {
-            console.log('인증정보 있음');
-        } else {
-            console.log('인증정보 없음!');
-        }
-    });
-
     const onSubmitLoginForm = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -101,9 +92,6 @@ export default function LoginForm() {
 
         dispatch(login(newUserAuthentication));
         router.push('/dashboard');
-
-        // console.log(newUserAuthentication);
-        // console.log('onSubmit');
     };
 
     return (

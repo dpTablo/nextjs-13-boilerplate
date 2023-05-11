@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { UserAuthentication } from '@model/service/auth/UserAuthentication';
 import { AuthService } from '@service/auth/AuthService';
+import { userAuthenticationFactory } from '@model/service/auth/UserAuthenticationFactory';
 
 export class DefaultAuthService implements AuthService {
     async login(userId: string, password: string): Promise<UserAuthentication> {
@@ -18,8 +19,6 @@ export class DefaultAuthService implements AuthService {
             responseType: 'json',
         });
 
-        const userAuthentication = new UserAuthentication();
-        userAuthentication.deserialize(response.data);
-        return userAuthentication;
+        return userAuthenticationFactory.createFromSerializeObject(response.data);
     }
 }

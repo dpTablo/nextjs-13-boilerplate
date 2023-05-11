@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserAuthentication } from '@model/service/auth/UserAuthentication';
 
-interface UserAuthenticationState {
+export interface UserAuthenticationState {
     value: UserAuthentication | undefined;
 }
 
