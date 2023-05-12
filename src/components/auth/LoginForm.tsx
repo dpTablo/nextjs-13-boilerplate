@@ -2,7 +2,7 @@
 
 import tw from 'tailwind-styled-components';
 import { AiOutlineUser as UserIcon } from 'react-icons/ai';
-import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import { useAppDispatch } from '@redux/hooks';
 import { useRouter } from 'next/navigation';
 
 import { login } from '@redux/auth/userAuthenticationSlice';
@@ -80,7 +80,6 @@ export default function LoginForm() {
     const router = useRouter();
     const authService: AuthService = new DefaultAuthService();
 
-    const userAuthentication = useAppSelector((state) => state.userAuthenticationReducer.value);
     const dispatch = useAppDispatch();
 
     const onSubmitLoginForm = async (event: React.FormEvent<HTMLFormElement>) => {

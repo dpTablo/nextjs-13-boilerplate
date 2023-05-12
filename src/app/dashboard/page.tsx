@@ -1,28 +1,24 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useAppDispatch } from '@redux/hooks';
-
-import { logout } from '@redux/auth/userAuthenticationSlice';
-import AuthenticationProfile from '@components/auth/AuthenticationProfile';
+import ServerSideUserProfile from '@components/auth/ServerSideUserProfile';
+import ClientSideUserProfile from '@components/auth/ClientSideUserProfile';
+import ClientComponent from '@components/ClientComponent';
 
 export default function DashboardPage() {
-    const router = useRouter();
-    const dispatch = useAppDispatch();
-
-    const onClickLogout = () => {
-        dispatch(logout());
-        router.push('/login');
-    };
+    //
+    //
 
     return (
         <div>
             <div>대시보드 페이지</div>
             <div>
                 <div>
-                    <AuthenticationProfile />
+                    {/* @ts-expect-error Async Server Component */}
+                    <ServerSideUserProfile userId={'user1@gmail.com'} />
                 </div>
-                <button onClick={onClickLogout}>로그인 페이지로 이동</button>
+                <div>
+                    <ClientComponent>
+                        <ClientSideUserProfile />
+                    </ClientComponent>
+                </div>
             </div>
         </div>
     );

@@ -1,5 +1,3 @@
-import { Providers } from '@redux/provider';
-
 import './globals.scss';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -10,9 +8,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
                 */}
             <head />
-            <body>
-                <Providers>{children}</Providers>
-            </body>
+            <body>{children}</body>
         </html>
     );
 }
