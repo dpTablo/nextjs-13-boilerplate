@@ -34,8 +34,6 @@ export default function ClientSideUserProfile() {
         },
     });
 
-    console.log(`isFetching : ${getUserQueryResult.isFetching}`);
-
     if (getUserQueryResult.isLoading) return 'Loading...';
 
     if (getUserQueryResult.error) return 'An error has occurred: ' + getUserQueryResult.error.message;

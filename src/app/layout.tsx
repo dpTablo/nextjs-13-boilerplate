@@ -1,4 +1,5 @@
 import './globals.scss';
+import ClientComponent from '@components/ClientComponent';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -8,7 +9,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
                 */}
             <head />
-            <body>{children}</body>
+            <body>
+                <ClientComponent>{children}</ClientComponent>
+            </body>
         </html>
     );
 }

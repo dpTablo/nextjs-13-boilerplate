@@ -4,6 +4,7 @@ import tw from 'tailwind-styled-components';
 import { AiOutlineUser as UserIcon } from 'react-icons/ai';
 import { useAppDispatch } from '@redux/hooks';
 import { useRouter } from 'next/navigation';
+import { clientCookieManagerProvider } from '@cookie/client/ClientCookieManagerProvider';
 
 import { login } from '@redux/auth/userAuthenticationSlice';
 import { DefaultAuthService } from '@service/auth/DefaultAuthService';
@@ -78,6 +79,7 @@ const LoginFormTitle = tw.h1`
 
 export default function LoginForm() {
     const router = useRouter();
+    const userAuthenticationCookieManager = clientCookieManagerProvider.userAuthenticationCookieManager;
     const authService: AuthService = new DefaultAuthService();
 
     const dispatch = useAppDispatch();
@@ -89,6 +91,7 @@ export default function LoginForm() {
         const password = event.currentTarget.password.value;
         const newUserAuthentication = await authService.login(email, password);
 
+        userAuthenticationCookieManager.setCookie(newUserAuthentication);
         dispatch(login(newUserAuthentication));
         router.push('/dashboard');
     };

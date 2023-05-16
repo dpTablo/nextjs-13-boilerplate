@@ -1,4 +1,3 @@
-import { UserAuthenticationJsonSchema } from '@model/service/auth/UserAuthentication';
 import Ajv from 'ajv';
 import { ServiceResponseInvalidJsonError } from '@error/ServiceResponseInvalidJsonError';
 import { ServiceModelFactory } from '@model/service/ServiceModelFactory';

@@ -27,7 +27,8 @@
             "@service/*": ["src/service/*"],
             "@model/*": ["src/model/*"],
             "@redux/*": ["src/redux/*"],
-            "@error/*": ["src/error/*"]
+            "@error/*": ["src/error/*"],
+            "@cookie/*": ["src/cookie/*"],
         },
         "types": ["node", "jset"]
     },

@@ -1,10 +1,13 @@
 import ServerSideUserProfile from '@components/auth/ServerSideUserProfile';
 import ClientSideUserProfile from '@components/auth/ClientSideUserProfile';
-import ClientComponent from '@components/ClientComponent';
+
+import { serverCookieManagerProvider } from '@cookie/server/ServerCookieManagerProvider';
 
 export default function DashboardPage() {
-    //
-    //
+    const userAuthenticationCookieManager = serverCookieManagerProvider.userAuthenticationCookieManager;
+
+    const userAuthentication = userAuthenticationCookieManager.getCookie();
+    console.log(userAuthentication);
 
     return (
         <div>
@@ -12,12 +15,10 @@ export default function DashboardPage() {
             <div>
                 <div>
                     {/* @ts-expect-error Async Server Component */}
-                    <ServerSideUserProfile userId={'user1@gmail.com'} />
+                    <ServerSideUserProfile userId={userAuthentication.userEmail} />
                 </div>
                 <div>
-                    <ClientComponent>
-                        <ClientSideUserProfile />
-                    </ClientComponent>
+                    <ClientSideUserProfile />
                 </div>
             </div>
         </div>
