@@ -5,6 +5,8 @@
 - [4. 배포](#4-배포)
 ---
 
+**문서 작성일 : 2023년 5월 17일**
+
 # 1. 프로젝트 구성
 ## next.js 13.4.1
 next.js 13 문서
@@ -12,6 +14,12 @@ https://nextjs.org/docs
 
 ## typescript
 개발언어로 typescript 를 사용한다.
+
+## nextjs 13 App Router 적용
+nextjs 13 App Router 를 사용한 방식으로 구현되어 있다. 작성된 코드는 별도의 설명이 없다면 App Router 기반에서의 동작을 의미한다.
+
+## Client Component 와 Server Component 간의 데이터 전달에 대하여
+문서 작성일을 기점으로 Client Component 와 Server Component 간의 데이터 전달할 수 있는 가이드라인이 없다. 따라서 예제에서는 cookie 를 이용하여 처리하도록 작성되어 있다.
 
 ## MSW
 MSW 라이브러리를 이용한 API Mocking 을 적용하였다.
