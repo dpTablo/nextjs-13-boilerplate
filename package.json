@@ -3,7 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev-msw": "set NEXT_PUBLIC_API_MOCKING=enable && next",
+        "dev-macos-msw": "export NEXT_PUBLIC_API_MOCKING=enable && next dev",
+        "dev-windows-msw": "set NEXT_PUBLIC_API_MOCKING=enable && next dev",
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
@@ -15,6 +16,7 @@
         "@next/font": "^13.3.0",
         "@react-native-async-storage/async-storage": "^1.18.1",
         "@reduxjs/toolkit": "^1.9.5",
+        "@tanstack/query-core": "^4.29.7",
         "@tanstack/react-query": "^4.29.5",
         "@tanstack/react-query-devtools": "^4.29.6",
         "@types/node": "^18.15.11",
