@@ -57,6 +57,10 @@
         "postcss": "^8.4.23",
         "prettier": "^2.8.7",
         "sass": "^1.62.1",
+        "stylelint": "^15.6.2",
+        "stylelint-config-standard": "^33.0.0",
+        "stylelint-config-standard-scss": "^9.0.0",
+        "stylelint-scss": "^5.0.0",
         "tailwind-styled-components": "^2.2.0"
     },
     "msw": {

@@ -107,6 +107,9 @@ mui 가이드 문서
 
 https://mui.com/material-ui/guides/interoperability/#tailwind-css
 
+### stylelint
+stylelint 가 적용되어 있으며 scss 에 대한 rule 표준이 작성되어 있다.
+
 # 2. IDE, 개발환경 설정
 ## stylelint
 사용하는 IDE에서 stylelint를 설정해야 한다.
