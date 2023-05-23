@@ -1,8 +1,8 @@
-import { UserAuthentication } from '@model/service/auth/UserAuthentication';
 import { expect } from '@jest/globals';
 import { ServiceResponseInvalidJsonError } from '@error/ServiceResponseInvalidJsonError';
+import { userAuthenticationFactory } from '@model/service/auth/UserAuthenticationFactory';
 
-describe('UserAuthentication Tests', () => {
+describe('UserAuthenticationFactory Tests', () => {
     it('deserialize - 정상적인 json', () => {
         // given
         const json = {
@@ -13,8 +13,7 @@ describe('UserAuthentication Tests', () => {
         };
 
         // when
-        const userAuthentication = new UserAuthentication();
-        userAuthentication.deserialize(json);
+        const userAuthentication = userAuthenticationFactory.createFromSerializeObject(json);
 
         // then
         expect(userAuthentication).toBeTruthy();
@@ -32,12 +31,9 @@ describe('UserAuthentication Tests', () => {
             refreshToken: '',
         };
 
-        // when
-        const userAuthentication = new UserAuthentication();
-
-        // then
+        // when & then
         expect(() => {
-            userAuthentication.deserialize(json);
+            userAuthenticationFactory.createFromSerializeObject(json);
         }).toThrow(ServiceResponseInvalidJsonError);
     });
 });

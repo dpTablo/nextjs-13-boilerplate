@@ -1,8 +1,9 @@
 import Cookies from 'js-cookie';
 import { UserAuthentication } from '@model/service/auth/UserAuthentication';
+import ClientCookieManager from '@cookie/client/ClientCookieManager';
 
 export class UserAuthenticationCookieManager implements ClientCookieManager<UserAuthentication> {
-    private readonly COOKIE_NAME: string = 'userAuthentication';
+    readonly COOKIE_NAME: string = 'userAuthentication';
 
     public getCookie(): UserAuthentication {
         const jsonString = Cookies.get(this.COOKIE_NAME);
