@@ -1,5 +1,5 @@
 import './globals.scss';
-import ClientComponent from '@components/ClientComponent';
+import ClientComponentEnvironment from '@components/ClientComponentEnvironment';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -10,7 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 */}
             <head />
             <body>
-                <ClientComponent>{children}</ClientComponent>
+                <ClientComponentEnvironment>{children}</ClientComponentEnvironment>
             </body>
         </html>
     );

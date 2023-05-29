@@ -7,7 +7,7 @@ import { Providers } from '@redux/provider';
 
 const queryClient = new QueryClient();
 
-export default function ClientComponent({ children }: { children: React.ReactNode }) {
+export default function ClientComponentEnvironment({ children }: { children: React.ReactNode }) {
     return (
         <Fragment>
             <QueryClientProvider client={queryClient}>
