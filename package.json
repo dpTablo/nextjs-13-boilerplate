@@ -3,10 +3,12 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
+        "dev-msw": "NEXT_PUBLIC_API_MOCKING=enable next",
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
+        "test": "jest",
         "cypress:open": "cypress open"
     },
     "dependencies": {
