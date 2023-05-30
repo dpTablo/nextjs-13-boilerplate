@@ -3,12 +3,12 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev-msw": "NEXT_PUBLIC_API_MOCKING=enable next",
+        "dev-msw": "set NEXT_PUBLIC_API_MOCKING=enable && next",
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "test": "jest",
+        "test": "jest --watch",
         "cypress:open": "cypress open"
     },
     "dependencies": {
@@ -30,9 +30,7 @@
         "react-dom": "^18.2.0",
         "react-icons": "^4.8.0",
         "react-redux": "^8.0.5",
-        "redux": "^4.2.1",
         "redux-persist": "^6.0.0",
-        "redux-thunk": "^2.4.2",
         "styled-components": "^5.3.10",
         "tailwindcss": "^3.3.2",
         "typescript": "^5.0.4"
