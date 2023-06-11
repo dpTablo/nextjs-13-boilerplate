@@ -40,9 +40,10 @@ export const initMsw = async () => {
     printConsoleEndBarAscii();
 };
 
-if (process.env.NEXT_PUBLIC_API_MOCKING === 'enable' && process.env.NODE_ENV === 'development') {
+const enableMSW = process.env.NEXT_PUBLIC_API_MOCKING && process.env.NEXT_PUBLIC_API_MOCKING.trim() === 'enable';
+if (enableMSW && process.env.NODE_ENV === 'development') {
     /** MSW */
     (async () => {
-        initMsw();
+        await initMsw();
     })();
 }
