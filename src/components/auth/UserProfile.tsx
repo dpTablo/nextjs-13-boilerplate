@@ -1,44 +1,41 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { useQuery } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
 
-import { DefaultUserService } from '@service/user/DefaultUserService';
-import { User } from '@model/service/user/User';
 import { logout } from '@redux/auth/userAuthenticationSlice';
+import { User } from '@model/service/user/User';
+import { DefaultUserService } from '@service/user/DefaultUserService';
 
-export default function ClientSideUserProfile() {
+export function UserProfile() {
     const router = useRouter();
     const dispatch = useAppDispatch();
 
+    const userService = new DefaultUserService();
+
     const userAuthentication = useAppSelector((state) => state.userAuthenticationReducer.value);
 
-    const userService = new DefaultUserService();
+    const getUserQueryResult = useQuery({
+        queryKey: ['hydrate-getUser'],
+        queryFn: () => {
+            if (!userAuthentication) {
+                return;
+            }
+            userService.getUser(userAuthentication.userEmail);
+        },
+    });
 
     const onClickLogout = () => {
         dispatch(logout());
         router.push('/login');
     };
 
-    const getUserQueryResult = useQuery({
-        queryKey: ['getUser'],
-        queryFn: async () => {
-            if (!userAuthentication) {
-                return null;
-            }
-
-            const user = await userService.getUser(userAuthentication.userEmail);
-            return user;
-        },
-    });
-
     if (getUserQueryResult.isLoading) return <h1>Loading...</h1>;
 
     if (getUserQueryResult.error) return <h1>An error has occurred: {getUserQueryResult.error.message}</h1>;
 
-    const user = getUserQueryResult.data as User;
+    const user = getUserQueryResult.data;
 
     return (
         <div className={'m-2 border border-red-500'}>
@@ -59,7 +56,6 @@ export default function ClientSideUserProfile() {
                     로그인 페이지로 이동
                 </button>
             </div>
-            <ReactQueryDevtools initialIsOpen />
         </div>
     );
 }

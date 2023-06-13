@@ -1,18 +1,17 @@
 'use client';
 
-import '@msw/index';
-import React, { Fragment } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Providers } from '@redux/provider';
+import { Fragment } from 'react';
+import { Providers as ReduxProvider } from '@redux/provider';
+import ReactQueryProvider from '@utils/reactQuery/ReactQueryProvider';
 
-const queryClient = new QueryClient();
+import '@msw/index';
 
 export default function ClientComponentEnvironment({ children }: { children: React.ReactNode }) {
     return (
         <Fragment>
-            <QueryClientProvider client={queryClient}>
-                <Providers>{children}</Providers>
-            </QueryClientProvider>
+            <ReactQueryProvider>
+                <ReduxProvider>{children}</ReduxProvider>
+            </ReactQueryProvider>
         </Fragment>
     );
 }
