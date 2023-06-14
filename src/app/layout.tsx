@@ -1,5 +1,5 @@
 import './globals.scss';
-import ClientComponentEnvironment from '@components/ClientComponentEnvironment';
+import ClientComponentEnvironment from '@utils/ClientComponentEnvironment';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
