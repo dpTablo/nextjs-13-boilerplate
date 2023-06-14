@@ -29,7 +29,8 @@
             "@redux/*": ["src/redux/*"],
             "@error/*": ["src/error/*"],
             "@cookie/*": ["src/cookie/*"],
-            "@utils/*": ["src/utils/*"]
+            "@utils/*": ["src/utils/*"],
+            "@authentication/*": ["src/authentication/*"],
         },
         "types": ["node", "jset"]
     },

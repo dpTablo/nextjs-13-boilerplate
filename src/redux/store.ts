@@ -4,9 +4,11 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
+import credentialsReducer, { CredentialsState } from './authentication/credentialsSlice';
 import userAuthenticationReducer, { UserAuthenticationState } from './auth/userAuthenticationSlice';
 
 interface ApplicationState {
+    credentialsReducer: CredentialsState;
     userAuthenticationReducer: UserAuthenticationState;
 }
 
@@ -17,6 +19,7 @@ const persistConfig = {
 };
 
 const combinedReducers = combineReducers<ApplicationState>({
+    credentialsReducer,
     userAuthenticationReducer,
 });
 

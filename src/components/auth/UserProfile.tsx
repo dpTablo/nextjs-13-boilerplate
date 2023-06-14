@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 
 import { logout } from '@redux/auth/userAuthenticationSlice';
-import { User } from '@model/service/user/User';
 import { DefaultUserService } from '@service/user/DefaultUserService';
 
 export function UserProfile() {
@@ -14,15 +13,15 @@ export function UserProfile() {
 
     const userService = new DefaultUserService();
 
-    const userAuthentication = useAppSelector((state) => state.userAuthenticationReducer.value);
+    const credentials = useAppSelector((state) => state.credentialsReducer.credentials);
 
     const getUserQueryResult = useQuery({
         queryKey: ['hydrate-getUser'],
         queryFn: () => {
-            if (!userAuthentication) {
+            if (!credentials) {
                 return;
             }
-            userService.getUser(userAuthentication.userEmail);
+            return userService.getUser(credentials.userEmail);
         },
     });
 
@@ -33,7 +32,11 @@ export function UserProfile() {
 
     if (getUserQueryResult.isLoading) return <h1>Loading...</h1>;
 
-    if (getUserQueryResult.error) return <h1>An error has occurred: {getUserQueryResult.error.message}</h1>;
+    if (getUserQueryResult.error) {
+        return <h1>An error has occurred: {getUserQueryResult.error.message}</h1>;
+    }
+
+    if (!getUserQueryResult.data) return '';
 
     const user = getUserQueryResult.data;
 

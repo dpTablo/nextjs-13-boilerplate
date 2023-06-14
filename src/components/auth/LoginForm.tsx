@@ -1,13 +1,12 @@
 'use client';
 
 import tw from 'tailwind-styled-components';
-import { AiOutlineUser as UserIcon } from 'react-icons/ai';
-import { useAppDispatch } from '@redux/hooks';
+import { useAppSelector } from '@redux/hooks';
 import { useRouter } from 'next/navigation';
 
-import { DefaultAuthService } from '@service/auth/DefaultAuthService';
-import { AuthService } from '@service/auth/AuthService';
-import CookieReduxAuthenticationManager from '../../security/CookieReduxAuthenticationManager';
+import { ReduxCookieAuthenticationManager } from '../../security/authentication/ReduxCookieAuthenticationManager';
+
+import { AiOutlineUser as UserIcon } from 'react-icons/ai';
 
 const Label = tw.label`
     block 
@@ -78,19 +77,20 @@ const LoginFormTitle = tw.h1`
 
 export default function LoginForm() {
     const router = useRouter();
-    const authService: AuthService = new DefaultAuthService();
-
-    const cookieReduxAuthenticationManager = new CookieReduxAuthenticationManager(useAppDispatch());
+    const authenticationManager = new ReduxCookieAuthenticationManager(useAppSelector);
 
     const onSubmitLoginForm = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const email = event.currentTarget.email.value;
         const password = event.currentTarget.password.value;
-        const newUserAuthentication = await authService.login(email, password);
 
-        cookieReduxAuthenticationManager.login(newUserAuthentication);
-        router.push('/dashboard');
+        const credentials = await authenticationManager.signIn(email, password);
+        if (credentials) {
+            router.push('/dashboard');
+        } else {
+            alert('login failed.');
+        }
     };
 
     return (

@@ -13,7 +13,7 @@ export default function ClientSideUserProfile() {
     const router = useRouter();
     const dispatch = useAppDispatch();
 
-    const userAuthentication = useAppSelector((state) => state.userAuthenticationReducer.value);
+    const credentials = useAppSelector((state) => state.credentialsReducer.credentials);
 
     const userService = new DefaultUserService();
 
@@ -25,11 +25,11 @@ export default function ClientSideUserProfile() {
     const getUserQueryResult = useQuery({
         queryKey: ['getUser'],
         queryFn: async () => {
-            if (!userAuthentication) {
+            if (!credentials) {
                 return null;
             }
 
-            const user = await userService.getUser(userAuthentication.userEmail);
+            const user = await userService.getUser(credentials.userEmail);
             return user;
         },
     });
