@@ -1,10 +1,9 @@
 import { AuthenticationManager } from './AuthenticationManager';
 import { AuthenticationService } from '@service/auth/AuthenticationService';
-import { AxiosFactory } from '../../http/axios/AxiosFactory';
 import { DefaultAuthenticationService } from '@service/auth/DefaultAuthenticationService';
-import { AxiosInstanceType } from '../../http/axios/AxiosInstanceType';
 import { serverCookieManagerProvider } from '@cookie/server/ServerCookieManagerProvider';
 import { Credentials } from './Credentials';
+import { AuthenticationAxiosProvider } from '../../http/axios/provider/AuthenticationAxiosProvider';
 
 export class ServerCookieAuthenticationManager implements AuthenticationManager {
     private credentialsCookieManager = serverCookieManagerProvider.credentialsCookieManager;
@@ -12,11 +11,10 @@ export class ServerCookieAuthenticationManager implements AuthenticationManager 
     private authenticationService: AuthenticationService;
 
     constructor() {
-        const axiosFactory = new AxiosFactory();
         this.authenticationService = new DefaultAuthenticationService();
-        this.authenticationService.setAxiosInstance(
-            axiosFactory.getDefaultAxiosInstance(AxiosInstanceType.AUTHENTICATION)
-        );
+
+        const axiosProvider = new AuthenticationAxiosProvider();
+        this.authenticationService.setAxiosProvider(axiosProvider);
     }
 
     async getCredentials(): Promise<Credentials | undefined> {

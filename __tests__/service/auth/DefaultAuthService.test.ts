@@ -1,9 +1,10 @@
 import { expect, beforeAll, afterAll, afterEach } from '@jest/globals';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { setupServer, SetupServer } from 'msw/node';
+import { rest } from 'msw';
 
 import { DefaultAuthenticationService } from '@service/auth/DefaultAuthenticationService';
-import { rest } from 'msw';
+import { DefaultAxiosProvider } from '../../../src/http/axios/provider/DefaultAxiosProvider';
 
 describe('DefaultAuthenticationService Tests', () => {
     const mockServer: SetupServer = setupServer();
@@ -22,11 +23,8 @@ describe('DefaultAuthenticationService Tests', () => {
     });
 
     const authService = new DefaultAuthenticationService();
-    const axiosInstance = axios.create({
-        baseURL: process.env.NEXT_PUBLIC_API_BACK_END_SERVICE_BASE_URL,
-        timeout: 1000 * 10,
-    });
-    authService.setAxiosInstance(axiosInstance);
+    const axiosProvider = new DefaultAxiosProvider();
+    authService.setAxiosProvider(axiosProvider);
 
     it('login - 정상 케이스', async () => {
         // given

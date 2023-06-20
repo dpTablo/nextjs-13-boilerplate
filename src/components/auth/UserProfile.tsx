@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 
 import { logout } from '@redux/auth/userAuthenticationSlice';
-import { backEndApi } from '@service/BackEndApi';
+import { clientBackEndApi } from '@service/ClientSideBackEndApi';
 
 export function UserProfile() {
     const router = useRouter();
@@ -19,7 +19,7 @@ export function UserProfile() {
             if (!credentials) {
                 return;
             }
-            return backEndApi.userService.getUser(credentials.userEmail);
+            return clientBackEndApi.userService.getUser(credentials.userEmail);
         },
     });
 

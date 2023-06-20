@@ -1,14 +1,15 @@
-import { AxiosInstance, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 
 import { UserService } from '@service/user/UserService';
 import { userFactory } from '@model/service/user/UserFactory';
 import { User } from '@model/service/user/User';
+import { AxiosProvider } from '../../http/axios/AxiosProvider';
 
 export class DefaultUserService implements UserService {
-    private axiosInstance!: AxiosInstance;
+    private axiosProvider!: AxiosProvider;
 
-    setAxiosInstance(axiosInstance: AxiosInstance): void {
-        this.axiosInstance = axiosInstance;
+    setAxiosProvider(axiosProvider: AxiosProvider): void {
+        this.axiosProvider = axiosProvider;
     }
 
     async getUser(userId: string): Promise<User> {
@@ -16,7 +17,7 @@ export class DefaultUserService implements UserService {
             userId,
         };
 
-        const response = await this.axiosInstance<AxiosResponse>({
+        const response = await this.axiosProvider.getAxiosInstance()<AxiosResponse>({
             method: 'get',
             url: `/user`,
             params: params,

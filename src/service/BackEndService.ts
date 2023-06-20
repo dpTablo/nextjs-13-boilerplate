@@ -1,5 +1,5 @@
-import { AxiosInstance } from 'axios';
+import { AxiosProvider } from '../http/axios/AxiosProvider';
 
 export interface BackEndService {
-    setAxiosInstance(axiosInstance: AxiosInstance): void;
+    setAxiosProvider(axiosProvider: AxiosProvider): void;
 }

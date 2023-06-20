@@ -1,8 +1,9 @@
 import { expect, beforeAll, afterAll, afterEach } from '@jest/globals';
-import axios, { AxiosError } from 'axios';
-import { DefaultUserService } from '@service/user/DefaultUserService';
 import { setupServer, SetupServer } from 'msw/node';
 import { rest } from 'msw';
+
+import { DefaultUserService } from '@service/user/DefaultUserService';
+import { DefaultAxiosProvider } from '../../../src/http/axios/provider/DefaultAxiosProvider';
 
 describe('DefaultUserService Tests', () => {
     const mockServer: SetupServer = setupServer();
@@ -21,11 +22,8 @@ describe('DefaultUserService Tests', () => {
     });
 
     const userService = new DefaultUserService();
-    const axiosInstance = axios.create({
-        baseURL: process.env.NEXT_PUBLIC_API_BACK_END_SERVICE_BASE_URL,
-        timeout: 1000 * 10,
-    });
-    userService.setAxiosInstance(axiosInstance);
+    const axiosProvider = new DefaultAxiosProvider();
+    userService.setAxiosProvider(axiosProvider);
 
     it('getUser - 정상 케이스', async () => {
         // given

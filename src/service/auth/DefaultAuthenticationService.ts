@@ -1,15 +1,14 @@
-import { AxiosInstance } from 'axios';
-
 import { UserAuthentication } from '@model/service/auth/UserAuthentication';
 import { AuthenticationService } from '@service/auth/AuthenticationService';
 import { userAuthenticationFactory } from '@model/service/auth/UserAuthenticationFactory';
 import { Credentials } from '../../security/authentication/Credentials';
+import { AxiosProvider } from '../../http/axios/AxiosProvider';
 
 export class DefaultAuthenticationService implements AuthenticationService {
-    private axiosInstance!: AxiosInstance;
+    private axiosProvider!: AxiosProvider;
 
-    setAxiosInstance(axiosInstance: AxiosInstance): void {
-        this.axiosInstance = axiosInstance;
+    setAxiosProvider(axiosProvider: AxiosProvider): void {
+        this.axiosProvider = axiosProvider;
     }
 
     async login(userId: string, password: string): Promise<Credentials> {
@@ -17,7 +16,7 @@ export class DefaultAuthenticationService implements AuthenticationService {
         params.append('userId', userId);
         params.append('password', password);
 
-        const response = await this.axiosInstance({
+        const response = await this.axiosProvider.getAxiosInstance()({
             method: 'post',
             url: '/auth/login',
             data: params,
@@ -36,7 +35,7 @@ export class DefaultAuthenticationService implements AuthenticationService {
         params.append('userId', userAuthentication.userEmail);
         params.append('refreshToken', userAuthentication.refreshToken);
 
-        const response = await this.axiosInstance({
+        const response = await this.axiosProvider.getAxiosInstance()({
             method: 'post',
             url: '/auth/refresh',
             data: params,

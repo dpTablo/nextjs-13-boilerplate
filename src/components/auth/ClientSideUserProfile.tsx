@@ -7,7 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { User } from '@model/service/user/User';
 import { logout } from '@redux/auth/userAuthenticationSlice';
-import { backEndApi } from '@service/BackEndApi';
+import { clientBackEndApi } from '@service/ClientSideBackEndApi';
 
 export default function ClientSideUserProfile() {
     const router = useRouter();
@@ -27,7 +27,7 @@ export default function ClientSideUserProfile() {
                 return null;
             }
 
-            const user = await backEndApi.userService.getUser(credentials.userEmail);
+            const user = await clientBackEndApi.userService.getUser(credentials.userEmail);
             return user;
         },
     });
