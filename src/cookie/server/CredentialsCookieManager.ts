@@ -1,6 +1,5 @@
 import { cookies } from 'next/headers';
 
-import { UserAuthentication } from '@model/service/auth/UserAuthentication';
 import ServerCookieManager from '@cookie/server/ServerCookieManager';
 import { Credentials } from '../../security/authentication/Credentials';
 
