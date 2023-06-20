@@ -5,13 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 
 import { logout } from '@redux/auth/userAuthenticationSlice';
-import { DefaultUserService } from '@service/user/DefaultUserService';
+import { backEndApi } from '@service/BackEndApi';
 
 export function UserProfile() {
     const router = useRouter();
     const dispatch = useAppDispatch();
-
-    const userService = new DefaultUserService();
 
     const credentials = useAppSelector((state) => state.credentialsReducer.credentials);
 
@@ -21,7 +19,7 @@ export function UserProfile() {
             if (!credentials) {
                 return;
             }
-            return userService.getUser(credentials.userEmail);
+            return backEndApi.userService.getUser(credentials.userEmail);
         },
     });
 

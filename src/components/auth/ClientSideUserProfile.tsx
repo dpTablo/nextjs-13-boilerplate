@@ -5,17 +5,15 @@ import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { useQuery } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { DefaultUserService } from '@service/user/DefaultUserService';
 import { User } from '@model/service/user/User';
 import { logout } from '@redux/auth/userAuthenticationSlice';
+import { backEndApi } from '@service/BackEndApi';
 
 export default function ClientSideUserProfile() {
     const router = useRouter();
     const dispatch = useAppDispatch();
 
     const credentials = useAppSelector((state) => state.credentialsReducer.credentials);
-
-    const userService = new DefaultUserService();
 
     const onClickLogout = () => {
         dispatch(logout());
@@ -29,7 +27,7 @@ export default function ClientSideUserProfile() {
                 return null;
             }
 
-            const user = await userService.getUser(credentials.userEmail);
+            const user = await backEndApi.userService.getUser(credentials.userEmail);
             return user;
         },
     });

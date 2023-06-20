@@ -4,9 +4,8 @@ import tw from 'tailwind-styled-components';
 import { useAppSelector } from '@redux/hooks';
 import { useRouter } from 'next/navigation';
 
-import { ReduxCookieAuthenticationManager } from '../../security/authentication/ReduxCookieAuthenticationManager';
-
 import { AiOutlineUser as UserIcon } from 'react-icons/ai';
+import { LocalStorageCookieAuthenticationManager } from '../../security/authentication/LocalStorageCookieAuthenticationManager';
 
 const Label = tw.label`
     block 
@@ -77,7 +76,8 @@ const LoginFormTitle = tw.h1`
 
 export default function LoginForm() {
     const router = useRouter();
-    const authenticationManager = new ReduxCookieAuthenticationManager(useAppSelector);
+
+    const authenticationManager = new LocalStorageCookieAuthenticationManager(useAppSelector);
 
     const onSubmitLoginForm = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
