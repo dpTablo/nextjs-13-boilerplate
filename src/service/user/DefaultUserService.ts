@@ -1,17 +1,24 @@
+import { AxiosInstance, AxiosResponse } from 'axios';
+
 import { UserService } from '@service/user/UserService';
-import { User } from '@model/service/user/User';
-import axios from 'axios';
 import { userFactory } from '@model/service/user/UserFactory';
+import { User } from '@model/service/user/User';
 
 export class DefaultUserService implements UserService {
+    private axiosInstance!: AxiosInstance;
+
+    setAxiosInstance(axiosInstance: AxiosInstance): void {
+        this.axiosInstance = axiosInstance;
+    }
+
     async getUser(userId: string): Promise<User> {
         const params = {
             userId,
         };
 
-        const response = await axios({
+        const response = await this.axiosInstance<AxiosResponse>({
             method: 'get',
-            url: `https://api.dptablo.com/v3/user`,
+            url: `/user`,
             params: params,
             responseType: 'json',
         });

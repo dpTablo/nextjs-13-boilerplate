@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 
 export const userHandlers = [
-    rest.get('https://api.dptablo.com/v3/user', async (request, response, context) => {
+    rest.get(`${process.env.NEXT_PUBLIC_API_BACK_END_SERVICE_BASE_URL}/user`, async (request, response, context) => {
         const userId = request.url.searchParams.get('userId');
 
         if (!userId) {
