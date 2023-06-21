@@ -6,16 +6,18 @@ import { useAppDispatch, useAppSelector } from '@redux/hooks';
 
 import { logout } from '@redux/auth/userAuthenticationSlice';
 import { clientBackEndApi } from '@service/ClientSideBackEndApi';
+import { LocalStorageCookieAuthenticationManager } from '../../security/authentication/LocalStorageCookieAuthenticationManager';
 
 export function UserProfile() {
     const router = useRouter();
     const dispatch = useAppDispatch();
 
-    const credentials = useAppSelector((state) => state.credentialsReducer.credentials);
+    const authenticationManager = new LocalStorageCookieAuthenticationManager();
 
     const getUserQueryResult = useQuery({
         queryKey: ['hydrate-getUser'],
-        queryFn: () => {
+        queryFn: async () => {
+            const credentials = await authenticationManager.getCredentials();
             if (!credentials) {
                 return;
             }

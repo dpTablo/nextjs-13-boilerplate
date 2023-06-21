@@ -15,9 +15,9 @@ export class AxiosFactory {
 
     private initTimeout(axiosInstanceType: AxiosInstanceType) {
         if (axiosInstanceType === AxiosInstanceType.DEFAULT) {
-            return 1000 * 5;
+            return 1000 * 10;
         } else {
-            return 1000 * 3;
+            return 1000 * 7;
         }
     }
 }

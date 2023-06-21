@@ -77,7 +77,7 @@ const LoginFormTitle = tw.h1`
 export default function LoginForm() {
     const router = useRouter();
 
-    const authenticationManager = new LocalStorageCookieAuthenticationManager(useAppSelector);
+    const authenticationManager = new LocalStorageCookieAuthenticationManager();
 
     const onSubmitLoginForm = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

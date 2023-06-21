@@ -2,7 +2,7 @@
 /* tslint:disable */
 
 /**
- * Mock Service Worker (1.2.1).
+ * Mock Service Worker (1.2.2).
  * @see https://github.com/mswjs/msw
  * - Please do NOT modify this file.
  * - Please do NOT serve this file on production.
@@ -118,7 +118,7 @@ self.addEventListener('fetch', function (event) {
     handleRequest(event, requestId).catch((error) => {
       if (error.name === 'NetworkError') {
         console.warn(
-          '[MSW] Successfully emulated auth network error for the "%s %s" request.',
+          '[MSW] Successfully emulated a network error for the "%s %s" request.',
           request.method,
           request.url,
         )
@@ -168,7 +168,7 @@ async function handleRequest(event, requestId) {
 }
 
 // Resolve the main client for the given event.
-// Client that issues auth request doesn't necessarily equal the client
+// Client that issues a request doesn't necessarily equal the client
 // that registered the worker. It's with the latter the worker should
 // communicate with during the response resolving phase.
 async function resolveMainClient(event) {
@@ -231,7 +231,7 @@ async function getResponse(event, client, requestId) {
     return passthrough()
   }
 
-  // Notify the client that auth request has been intercepted.
+  // Notify the client that a request has been intercepted.
   const clientMessage = await sendToClient(client, {
     type: 'REQUEST',
     payload: {
@@ -267,7 +267,7 @@ async function getResponse(event, client, requestId) {
       const networkError = new Error(message)
       networkError.name = name
 
-      // Rejecting auth "respondWith" promise emulates auth network error.
+      // Rejecting a "respondWith" promise emulates a network error.
       throw networkError
     }
   }

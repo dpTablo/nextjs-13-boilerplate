@@ -8,12 +8,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { User } from '@model/service/user/User';
 import { logout } from '@redux/auth/userAuthenticationSlice';
 import { clientBackEndApi } from '@service/ClientSideBackEndApi';
+import { LocalStorageCookieAuthenticationManager } from '../../security/authentication/LocalStorageCookieAuthenticationManager';
 
 export default function ClientSideUserProfile() {
     const router = useRouter();
     const dispatch = useAppDispatch();
 
-    const credentials = useAppSelector((state) => state.credentialsReducer.credentials);
+    const autheticationManager = new LocalStorageCookieAuthenticationManager();
 
     const onClickLogout = () => {
         dispatch(logout());
@@ -23,6 +24,7 @@ export default function ClientSideUserProfile() {
     const getUserQueryResult = useQuery({
         queryKey: ['getUser'],
         queryFn: async () => {
+            const credentials = await autheticationManager.getCredentials();
             if (!credentials) {
                 return null;
             }
