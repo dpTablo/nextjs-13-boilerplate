@@ -32,7 +32,7 @@
             "@utils/*": ["src/utils/*"],
             "@authentication/*": ["src/authentication/*"],
         },
-        "types": ["node", "jset"]
+        "types": ["node", "jest"]
     },
     "include": [
         "next-env.d.ts",
