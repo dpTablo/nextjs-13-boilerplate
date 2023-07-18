@@ -1,7 +1,7 @@
 # 백엔드 API 서비스 계층 구현 가이드
 
-# 백엔드 서버 URL 설정에 관하여
-아래 3개 설정 정보를 확인하여 백엔드 개발 서버와 백엔드 운영 서버의 정보를 설정한다.  
+# 1. 백엔드 서버 URL 설정에 관하여
+아래 3개 설정 정보를 확인하여 백엔드 개발 서버와 백엔드 운영 서버의 정보를 설정한다.
 - .env
 - .env.development
 - .evn.production
@@ -9,7 +9,7 @@
 
 `NEXT_PUBLIC_API_BACK_END_SERVICE_BASE_URL` 프로퍼티에 개발서버에 맞는 정보를 설정한다.
 
-# 기본 사항
+# 2. 기본 사항
 크게 3가지 요소로 구성된다.
 - `AxiosFactory`
 - `AxiosProvider`
@@ -31,3 +31,9 @@ axios instance 에 부가적인 설정을 하고, 싱글톤으로 관리되도�
 ### ClientSideBackEndApi 와 ServerSideBackEndApi
 위 3가지 요소에 대한 설정과 인증 서비스를 제외한 모든 서비스들의 facade 객체이다. 각각 클라이언트 측과 서버(nextjs server) 측에서 사용가능하다.
 컴포넌트 구현 측면에서는 위 두가지 facade 객체를 통해서 백엔드 서비스 요청을 수행한다.
+
+# 3. 예제 코드
+다음 코드를 참조한다.
+- [UserService.ts](..%2Fsrc%2Fservice%2Fuser%2FUserService.ts) : 백엔드 USER API 인터페이스 정의
+- [DefaultUserService.ts](..%2Fsrc%2Fservice%2Fuser%2FDefaultUserService.ts) : USER API 인터페이스 구현체
+- [DefaultUserService.test.ts](..%2F__tests__%2Fservice%2Fuser%2FDefaultUserService.test.ts) : DefaultUserService 의 테스트 코드 
